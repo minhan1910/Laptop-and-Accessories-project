@@ -17,6 +17,18 @@
         @include('partials.content-header', ['name' => 'Product', 'key' => 'Add'])
         <!-- /.content-header -->
 
+        <div class="col-md-12">
+            {{-- @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif --}}
+        </div>
+
         <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
             <!-- Main content -->
             <div class="content">
@@ -26,14 +38,26 @@
                             @csrf
                             <div class="form-group">
                                 <label for="email">Tên sản phẩm</label>
-                                <input type="text" class="form-control" placeholder="Nhập tên sản phẩm..."
-                                    name="name">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    placeholder="Nhập tên sản phẩm..." name="name">
+
+                                @error('name')
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="">Giá</label>
-                                <input type="text" class="form-control" placeholder="Nhập giá sản phẩm..."
-                                    name="price">
+                                <input type="text" class="form-control @error('price') is-invalid @enderror"
+                                    placeholder="Nhập giá sản phẩm..." name="price">
+
+                                @error('price')
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -66,7 +90,14 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Nội dung</label>
-                                <textarea name="contents" id="" cols="30" rows="10" class="form-control tinymce_editor_init"></textarea>
+                                <textarea name="contents" id="" cols="30" rows="10"
+                                    class="form-control tinymce_editor_init @error('name') is-invalid @enderror"></textarea>
+
+                                @error('content')
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
 

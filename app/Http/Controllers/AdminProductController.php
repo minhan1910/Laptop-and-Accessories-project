@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Components\Recursive;
+use App\Http\Requests\ProductAddRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -56,7 +57,7 @@ class AdminProductController extends Controller
         return view('admin.product.add', compact('htmlOption'));
     }
 
-    public function store(Request $request)
+    public function store(ProductAddRequest $request)
     {
 
         try {
@@ -80,7 +81,9 @@ class AdminProductController extends Controller
             }
 
             // Insert into products table
-            $product = $this->product->create($dataProductCreate);
+            $product = $this
+                ->product
+                ->create($dataProductCreate);
 
             // Insert into product_images table
             $productImages = [];
@@ -96,7 +99,9 @@ class AdminProductController extends Controller
                 }
             }
 
-            $product->images()->insert($productImages);
+            $product
+                ->images()
+                ->insert($productImages);
 
             // Insert tags for the product
             $tagIds = [];
@@ -121,7 +126,7 @@ class AdminProductController extends Controller
             Log::error('Message: ' . $e->getMessage() . '----- Line: ' . $e->getLine());
             $msg = 'Add product failed !';
         }
-        return redirect()->route('product.index')->msg('msg', $msg);
+        return redirect()->route('product.index')->with('msg', $msg);
     }
 
     public function getCategory($parentId)
