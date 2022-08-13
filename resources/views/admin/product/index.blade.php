@@ -38,17 +38,21 @@
                                     <tr>
                                         <td>{{ $product->id }}</td>
                                         <td>{{ $product->name }}</td>
-                                        <td>{{ $product->price }}</td>
+                                        <td>{{ number_format($product->price) }}</td>
                                         <td>
                                             <img class="product_image_150_100" src="{{ $product->feature_image_path }}"
                                                 alt="" />
                                         </td>
-                                        <td>{{ $product->category->name }}</td>
+                                        <td>{{ optional($product->category)->name }}</td>
                                         <td>
                                             <a href="{{ route('admin.products.edit', ['id' => $product->id]) }}"
                                                 class="btn btn-default">Edit</a>
+
                                             <a href="{{ route('admin.products.delete', ['id' => $product->id]) }}"
-                                                class="btn btn-danger">Delete</a>
+                                                class="btn btn-danger action_delete"
+                                                data-url="{{ route('admin.products.delete', ['id' => $product->id]) }}">
+                                                Delete
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -65,4 +69,6 @@
 @endsection
 
 @section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('admins/product/index/list.js') }}"></script>
 @endsection

@@ -1,3 +1,9 @@
 .select2-selection__choice {
     background-color: black !important;
 }
+
+.image_product_detail {
+    width: 100%;
+    object-fit: contain;
+    height: 130px;
+}
