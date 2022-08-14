@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\SliderAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +26,12 @@ Route::get('/home', function () {
 Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
+
         Route::get('/', [AdminController::class, 'loginAdmin']);
+
         Route::post('/', [AdminController::class, 'postLoginAdmin']);
 
+        // Categories
         Route::prefix('categories')
             ->name('categories.')
             ->group(function () {
@@ -51,6 +55,7 @@ Route::prefix('admin')
                     ->name('delete');
             });
 
+        // Menus
         Route::prefix('menus')
             ->name('menus.')
             ->group(function () {
@@ -74,6 +79,7 @@ Route::prefix('admin')
                     ->name('delete');
             });
 
+        // Products
         Route::prefix('products')
             ->name('products.')
             ->group(function () {
@@ -96,13 +102,28 @@ Route::prefix('admin')
                 Route::get('/delete/{id}', [AdminProductController::class, 'delete'])
                     ->name('delete');
             });
+
+        // Sliders
+        Route::prefix('sliders')
+            ->name('sliders.')
+            ->group(function () {
+
+                Route::get('/', [SliderAdminController::class, 'index'])
+                    ->name('index');
+
+                Route::get('/create', [SliderAdminController::class, 'create'])
+                    ->name('create');
+
+                Route::post('/store', [SliderAdminController::class, 'store'])
+                    ->name('store');
+
+                Route::get('/edit/{id}', [SliderAdminController::class, 'edit'])
+                    ->name('edit');
+
+                Route::post('/update/{id}', [SliderAdminController::class, 'update'])
+                    ->name('update');
+
+                Route::get('/delete/{id}', [SliderAdminController::class, 'delete'])
+                    ->name('delete');
+            });
     });
-
-
-
-
-    
-// Auth::routes();
-
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

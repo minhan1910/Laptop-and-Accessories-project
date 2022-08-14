@@ -10,7 +10,6 @@ trait StorageImageTrait
 {
     public function storageTraitUpload($request, $fieldName, $folderName)
     {
-
         if (!$request->hasFile($fieldName))
             return null;
 
