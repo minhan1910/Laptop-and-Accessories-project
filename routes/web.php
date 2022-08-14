@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\SettingAdminController;
 use App\Http\Controllers\SliderAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -124,6 +125,30 @@ Route::prefix('admin')
                     ->name('update');
 
                 Route::get('/delete/{id}', [SliderAdminController::class, 'delete'])
+                    ->name('delete');
+            });
+
+        // Settings
+        Route::prefix('settings')
+            ->name('settings.')
+            ->group(function () {
+
+                Route::get('/', [SettingAdminController::class, 'index'])
+                    ->name('index');
+
+                Route::get('/create', [SettingAdminController::class, 'create'])
+                    ->name('create');
+
+                Route::post('/store', [SettingAdminController::class, 'store'])
+                    ->name('store');
+
+                Route::get('/edit/{id}', [SettingAdminController::class, 'edit'])
+                    ->name('edit');
+
+                Route::post('/update/{id}', [SettingAdminController::class, 'update'])
+                    ->name('update');
+
+                Route::get('/delete/{id}', [SettingAdminController::class, 'delete'])
                     ->name('delete');
             });
     });
