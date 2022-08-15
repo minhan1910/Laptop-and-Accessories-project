@@ -32,7 +32,7 @@ class AdminProductController extends Controller
         Product $product,
         ProductImage $productImage,
         ProductTag $productTag,
-        Tag $tag,
+        Tag $tag
     ) {
         $this->category = $category;
         $this->product = $product;
