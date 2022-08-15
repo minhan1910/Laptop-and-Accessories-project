@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SettingAddRequest;
 use App\Models\Setting;
+use App\Traits\DeleteModelTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class SettingAdminController extends Controller
 {
+    use DeleteModelTrait;
+
     private $setting;
 
     public function __construct(Setting $setting)
@@ -80,39 +83,6 @@ class SettingAdminController extends Controller
 
     public function delete($id)
     {
-        // $this->setting->find($id)->delete();
-
-        // return redirect()
-        //     ->route('admin.settings.index')
-        //     ->with('msg', 'Update setting successfully !');
-
-        try {
-
-            // Tạm thời xóa như vậy để sau này xong các cái khác rùi handle trường hơp này sau
-            // vì chưa có liên kết Fk
-            $this
-                ->setting
-                ->find($id)
-                ->delete();
-
-            /**
-             * product có n tags
-             *            n images
-             *            n orders
-             *            n order - 1 customer          
-             */
-
-            return response()->json([
-                'code' => 200,
-                'message' => 'success'
-            ], 200);
-        } catch (\Exception $e) {
-
-            Log::error('Message: ' . $e->getMessage() . '----- Line: ' . $e->getLine());
-            return response()->json([
-                'code' => 500,
-                'message' => 'fail'
-            ], 500);
-        }
+        return $this->deleteModelTrait($id, $this->setting);
     }
 }
