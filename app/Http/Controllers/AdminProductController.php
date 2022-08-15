@@ -32,7 +32,7 @@ class AdminProductController extends Controller
         Product $product,
         ProductImage $productImage,
         ProductTag $productTag,
-        Tag $tag,
+        Tag $tag
     ) {
         $this->category = $category;
         $this->product = $product;
@@ -234,7 +234,7 @@ class AdminProductController extends Controller
              * product có n tags
              *            n images
              *            n orders
-             *            n order - 1 customer          
+             *            n order - 1 customer
              */
 
             return response()->json([
