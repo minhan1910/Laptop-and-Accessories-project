@@ -114,7 +114,9 @@ class AdminProductController extends Controller
 
             // Insert product_tag tbale
             if (!empty($tagIds)) {
-                $product->tags()->attach($tagIds);
+                $product
+                    ->tags()
+                    ->attach($tagIds);
             }
 
             DB::commit();
