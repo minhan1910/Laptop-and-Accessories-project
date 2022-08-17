@@ -5,7 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminProductController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AdminUserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -96,12 +96,22 @@ Route::prefix('admin')
                 Route::get('/delete/{id}', [AdminProductController::class, 'delete'])
                     ->name('delete');
             });
+            // Handle users
+        Route::prefix('users')->name('users.')->group(function(){
+                Route::get('/',[AdminUserController::class,'index'])->name('index');
+                Route::get('/create',[AdminUserController::class,'create'])->name('create');
+                Route::post('/store',[AdminUserController::class, 'store'])->name('store');
+                Route::get('/edit/{id}',[AdminUserController::class,'edit'])->name('edit');
+                Route::post('/update/{id}',[AdminUserController::class,'update'])->name('update');
+                Route::get('/delete/{id}',[AdminUserController::class,'delete'])->name('delete');
+        });
+        // End handle users
     });
 
 
 
 
-    
+
 // Auth::routes();
 
 
