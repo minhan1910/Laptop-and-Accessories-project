@@ -18,7 +18,6 @@ trait DeleteModelTrait
                 'message' => 'success'
             ], 200);
         } catch (\Exception $e) {
-
             Log::error('Message: ' . $e->getMessage() . '----- Line: ' . $e->getLine());
             return response()->json([
                 'code' => 500,
