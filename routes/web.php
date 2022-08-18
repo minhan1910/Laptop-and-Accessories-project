@@ -6,6 +6,8 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminUserController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
