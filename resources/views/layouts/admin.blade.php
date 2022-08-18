@@ -47,7 +47,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('admintle/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('admintle/dist/js/adminlte.min.js') }}"></script>
-
+    {{-- CDN sweet alert --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('js')
 </body>
 

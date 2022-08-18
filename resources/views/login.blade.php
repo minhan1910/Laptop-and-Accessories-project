@@ -36,6 +36,14 @@
 </head>
 
 <body>
+
+    @if (session('msg'))
+        <div class="alert alert-danger">
+            <ul>
+                {{ session('msg') }}
+            </ul>
+        </div>
+    @endif
     <div id="login">
         <h3 class="text-center text-white pt-5">Login form</h3>
         <div class="container">

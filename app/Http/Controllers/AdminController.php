@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -23,5 +24,7 @@ class AdminController extends Controller
         ], $remember)) {
             return redirect()->to('home');
         }
+
+        return back()->with('msg', 'error');
     }
 }
