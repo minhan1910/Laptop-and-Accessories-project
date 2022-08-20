@@ -11,6 +11,7 @@ class AdminController extends Controller
     {
         if (auth()->check())
             return redirect()->to('home');
+        
         return view('login');
     }
 

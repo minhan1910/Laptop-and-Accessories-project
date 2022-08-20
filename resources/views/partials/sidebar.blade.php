@@ -48,7 +48,7 @@
                     <a href="{{ route('admin.products.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Sản phẩm
+                            Products
                         </p>
                     </a>
                 </li>
