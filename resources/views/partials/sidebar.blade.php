@@ -31,7 +31,7 @@
                     <a href="{{ route('admin.categories.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Danh mục sản phẩm
+                            Category
                             <span class="right badge badge-danger">New</span>
                         </p>
                     </a>
@@ -48,7 +48,7 @@
                     <a href="{{ route('admin.products.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Products
+                            Product
                         </p>
                     </a>
                 </li>
@@ -56,7 +56,23 @@
                     <a href="{{ route('admin.users.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Users
+                            User
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.roles.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Role
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.actions.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Permission Action
                         </p>
                     </a>
                 </li>
