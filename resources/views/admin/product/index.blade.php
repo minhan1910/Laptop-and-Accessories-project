@@ -9,7 +9,7 @@
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        @include('partials.content-header', ['name' => 'Users', 'key' => 'List'])
+        @include('partials.content-header', ['name' => 'Products', 'key' => 'List'])
         <!-- /.content-header -->
 
         <!-- Main content -->
@@ -24,41 +24,47 @@
                 @endif
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="{{ route('admin.users.create') }}" class="btn btn-success float-right m-2">Add</a>
+                        <a href="{{ route('admin.products.create') }}" class="btn btn-success float-right m-2">Add new
+                            product</a>
                     </div>
                     <div class="col-md-12">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Fullname</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Role</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">Created at</th>
+                                    <th scope="col">Update at</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty('usersList'))
-                                    @foreach ($usersList as $user)
+                                @if (!empty('productList'))
+                                    @foreach ($productList as $product)
                                         <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td width="15%">{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $product->id }}</td>
+                                            <td width="15%">{{ $product->name }}</td>
+                                            <td class="d-flex justify-content-center"><img
+                                                    src="{{ $product->feature_image_path }}" alt=""
+                                                    class="img-fluid" style="width:60px; height: 60px;"></td>
                                             <td>
-                                                {{ $user->street }}, ward {{ $user->ward }}, district
-                                                {{ $user->district }}
+                                                {{ $product->price }}
                                             </td>
-                                            <td>
+                                            <td width="5%">
                                                 <div class="alert alert-info d-flex justify-content-center">
-                                                    {{ $user->role->name ?? '' }}</div>
+                                                    {{ $product->category->name ?? '' }}</div>
                                             </td>
-                                            <td>{{ $user->created_at }}</td>
+                                            <td>{{ $product->content }}</td>
+                                            <td>{{ $product->created_at }}</td>
+                                            <td>{{ $product->updated_at }}</td>
                                             <td width="15%">
-                                                <a href="{{ route('admin.users.edit', ['id' => $user->id]) }}"
+                                                <a href="{{ route('admin.products.edit', ['id' => $product->id]) }}"
                                                     class="btn btn-default">Edit</a>
-                                                <a href="{{ route('admin.users.delete', ['id' => $user->id]) }}"
+                                                <a href="{{ route('admin.products.delete', ['id' => $product->id]) }}"
                                                     class="btn btn-danger delete-confirm">Delete</a>
                                             </td>
                                         </tr>
@@ -68,7 +74,7 @@
                         </table>
                     </div>
                     <div class="col-md-12">
-                        {{ $usersList->links() }}
+                        {{ $productList->links() }}
                     </div>
                 </div>
             </div>

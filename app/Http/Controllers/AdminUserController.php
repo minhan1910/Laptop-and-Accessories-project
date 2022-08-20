@@ -52,30 +52,43 @@ class AdminUserController extends Controller
     {
         $roleList = Role::all();
         $userInfo = $this->user::find($id);
+
         return view('admin.user.edit',compact('roleList','userInfo'));
     }
     public function update(Request $request,$id)
     {
+
         if(Auth::check())
             $user_id = auth()->user()->id;
+        $currentPassword = $request->password;
         $rules = [
             'name'=>'required | min:6',
             'email'=>'required | email|unique:users,email,'.$id,
-            'password'=>'required| min:8',
             'street' => 'required | min:10',
             'ward'=>'required',
             'district'=>'required',
             'role' => 'required||not_in:0'
         ];
+        if($currentPassword == null)
+        {
+            $currentPassword = $this->user::find($id)->password;
+        }
+        else
+        {
+            $currentPassword = Hash::make($request->password);
+            $rules['password'] = 'min:8';
+        }
+
         $messages = [
             'role.not_in'=>'You must choose specific role in this dropdown list',
             'email:unique'=>'email already exist on system'
         ];
+        $request->password = $currentPassword;
         $request->validate($rules,$messages);
         $data = [
             'name'=>$request->name,
             'email'=>$request->email,
-            'password'=>Hash::make($request->password),
+            'password'=> $request->password,
             'role_id'=>$request->role,
             'user_id'=>$user_id,
             'street'=>$request->street,
@@ -91,6 +104,6 @@ class AdminUserController extends Controller
     public function delete($id)
     {
         $checkSuccess =  $this->user::destroy($id);
-        if($checkSuccess) return back();
+        if($checkSuccess) return back()->with('msg','Delete successfully')->with('type','success');
     }
 }
