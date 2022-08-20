@@ -110,9 +110,7 @@
     </div>
 @endsection
 @section('js')
-{{-- Sweet alert --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.28/sweetalert2.min.js" integrity="sha512-vBXZW60oYiantQ/5hVVhYcpt/jbHXsTG3La1EtR3/IxfbXxt++pqBU/ZnAPQZi6JbkWJNtPqnQrIqaI3e9BB7g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{{-- End Sweet alert --}}
+
     <script>
         function togglePassword() {
             var x = document.getElementById("passwordInput");
