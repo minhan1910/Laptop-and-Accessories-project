@@ -7,26 +7,20 @@ Route::prefix('actions')
     ->name('actions.')
     ->group(function () {
         Route::get('/', [AdminActionController::class, 'index'])
-            ->name('index')
-            ->middleware('can:category-list');
+            ->name('index');
 
         Route::get('/create', [AdminActionController::class, 'create'])
-            ->name('create')
-            ->middleware('can:category-add');
+            ->name('create');
 
         Route::post('/store', [AdminActionController::class, 'store'])
-            ->name('store')
-            ->middleware('can:category-store');
+            ->name('store');
 
         Route::get('/edit/{id}', [AdminActionController::class, 'edit'])
-            ->name('edit')
-            ->middleware('can:category-edit');
+            ->name('edit');
 
         Route::post('/update/{id}', [AdminActionController::class, 'update'])
-            ->name('update')
-            ->middleware('can:category-update');
+            ->name('update');
 
         Route::get('/delete/{id}', [AdminActionController::class, 'delete'])
-            ->name('delete')
-            ->middleware('can:category-delete');
+            ->name('delete');
     });
