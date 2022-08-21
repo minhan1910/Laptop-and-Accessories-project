@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class AdminActionController extends Controller
 {
@@ -49,12 +50,10 @@ class AdminActionController extends Controller
         try {
             DB::beginTransaction();
             $permissionId = $request->permission_id;
-            $actionIds = $request->actions;
             $permission = $this->permission::find($permissionId);
-            DB::enableQueryLog();
+
             $action = $this
-                ->action
-                ->firstOrNew(
+                ->action::firstOrCreate(
                     ['name' => $request->name],
                     [
                         'name' => $request->name,
@@ -68,23 +67,23 @@ class AdminActionController extends Controller
                 ->actions()
                 ->attach($action->id);
 
-            // $action
-            //     ->permissions()
-            //     ->attach($permissionId);
+            $msg = 'Add action successfully';
+            $err = '';
 
-            dd(DB::getQueryLog());
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
             Log::error('Message: ' . $e->getMessage() . '----- Line: ' . $e->getLine());
+            $msg = 'Add action failed';
+            $err = '';
         }
 
-        return redirect()->route('admin.actions.index');
+        return redirect()
+            ->route('admin.actions.index')
+            ->with('msg', $msg)
+            ->with('err', $err);
     }
 
-    /**
-     * Distinct grade
-     */
     public function selectPermisison(Request $request)
     {
         try {
@@ -102,7 +101,6 @@ class AdminActionController extends Controller
                 'data' => $actionNamesForOnePermission
             ], 200);
         } catch (\Exception $e) {
-
             Log::error('Message: ' . $e->getMessage() . '----- Line: ' . $e->getLine());
             return response()->json([
                 'code' => 500,
@@ -111,6 +109,221 @@ class AdminActionController extends Controller
         }
     }
 
+
+    public function edit(Request $request, Action $action)
+    {
+        $permissions = $this
+            ->permission::orderBy('created_at', 'DESC')
+            ->paginate(4);
+
+        $currentPermisisons = $this
+            ->getPermissionNamesForOneAction($action);
+
+        $currentPermissionsHtml = $this
+            ->formatCurrentPermissions($currentPermisisons);
+
+        $request
+            ->session()
+            ->put('actionId', $action->id);
+
+        return view('admin.action.edit', compact('permissions', 'currentPermissionsHtml', 'action'));
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $permissionId = $request->permission_id;
+
+            $permission = $this
+                ->permission::find($permissionId);
+
+            $actionNamesForOnePermission = $this
+                ->getActionNamesForOnePermission($permission);
+
+            $existsActionInCurrentPermssion = $actionNamesForOnePermission[0]
+                ->contains(function ($permission, $key) use ($request) {
+                    return $permission->name === $request->name;
+                });
+
+            if (Session::has('actionId'))
+                $actionId = Session::get('actionId');
+            $action = $this
+                ->action::find($actionId);
+
+            // nếu cái action này < 1 thì update còn > 1 thì tách ra create 1 cái action mới
+            $amountOfActionCurrents = $this
+                ->countActionCurrent($actionId);
+
+            if (
+                /** 
+                 * < 2 => chỉ có 1 thằng và 
+                 *          cái action này 
+                 *              nếu tồn tại trong action của permission
+                 *                  -> update
+                 *              else
+                 *                  -> update 
+                 *  vì nó chỉ có 1 :)
+                 * 
+                 * > 2 => trên nhiều perrmission có action này
+                 *  -> phải create nếu nó ko nằm trong cái permisssion hiện tại
+                 * -> else giữ nguyên
+                 * */
+                $amountOfActionCurrents[0]->count < 2
+            ) {
+                // update
+                if ($existsActionInCurrentPermssion) {
+                    $this
+                        ->action
+                        ::find($actionId)
+                        ->update([
+                            'name' => $request->name,
+                            'display_name' => $request->display_name,
+                            'updated_by' => Auth::user()->name,
+                        ]);
+                }
+            } else {
+                // Create
+                if (!$existsActionInCurrentPermssion) {
+                    /**
+                     *  After deleting the action current 
+                     *  Then creating new action
+                     *  */
+                    $permission
+                        ->actions()
+                        ->detach($action->id);
+
+                    $newAction = $this
+                        ->action
+                        ->create([
+                            'name' => $request->name,
+                            'display_name' => $request->name,
+                            'active' => 1,
+                            'created_by' => Auth::user()->name
+                        ]);
+                    // Like add action_id into pivot table
+                    $permission
+                        ->actions()
+                        ->attach($newAction->id);
+                }
+            }
+
+            $msg = 'Edit action successfully !!';
+            $error = null;
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Message: ' . $e->getMessage() . '----- Line: ' . $e->getLine());
+            $msg = null;
+            $error = 'Edit action failed !!';
+        }
+
+        return back()
+            ->withInput()
+            ->with('msg', $msg)
+            ->with('error', $error);
+    }
+
+    public function getDelete(Request $request, Action $action)
+    {
+        $currentPermisisons = $this
+            ->getPermissionNamesForOneAction($action);
+
+        $currentPermissionsHtml = $this
+            ->formatCurrentPermissions($currentPermisisons);
+
+        $request
+            ->session()
+            ->put('actionId', $action->id);
+
+        return view('admin.action.delete', compact('currentPermisisons', 'currentPermissionsHtml', 'action'));
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $permissionId = $request->permission_id;
+
+            $permission = $this
+                ->permission::find($permissionId);
+
+            if (Session::has('actionId'))
+                $actionId = Session::get('actionId');
+
+            $amountOfActionCurrents = $this
+                ->countActionCurrent($actionId);
+
+            if ($amountOfActionCurrents[0]->count < 2) {
+                // Delete permanently 
+                $permission
+                    ->actions()
+                    ->detach($actionId);
+
+                $status = $this
+                    ->action
+                    ::find($actionId)
+                    ->delete();
+            } else {
+                /**
+                 * Just remove action_id in pivot table 
+                 */
+                $permission
+                    ->actions()
+                    ->detach($actionId);
+            }
+
+            $msg = 'Delete action successfully !!';
+            $error = null;
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Message: ' . $e->getMessage() . '----- Line: ' . $e->getLine());
+            $msg = null;
+            $error = 'Delete action failed !!';
+        }
+
+        return redirect()
+            ->route('admin.actions.index')
+            ->with('msg', $msg)
+            ->with('error', $error);
+    }
+
+
+    /** 
+     * -------------------------------------------------------------------
+     * Methods for handling logic like retrieve data, format data, ...
+     */
+
+    private function formatCurrentPermissions($currentPermissions)
+    {
+        $currentPermissionsHtml = '';
+        $marked = '';
+        foreach ($currentPermissions[0] as $currentPermission) {
+            $currentPermissionsHtml .= "$marked$currentPermission->name";
+            $marked = '/';
+        }
+
+        return $currentPermissionsHtml;
+    }
+
+    private function countActionCurrent($actionId)
+    {
+        $amountOfActionCurrents = DB::table('actions as a')
+            ->leftJoin(
+                'permission_actions as pa',
+                'pa.action_id',
+                '=',
+                'a.id'
+            )
+            ->where('a.id', '=', $actionId)
+            ->groupBy('pa.action_id')
+            ->select(DB::raw('COUNT(*) as count'))
+            ->get();
+        return $amountOfActionCurrents;
+    }
 
     /**
      * @todo This method retrieve and format permissions name
@@ -168,6 +381,7 @@ class AdminActionController extends Controller
 
         return $actionNamesForEachPermission;
     }
+
     private function getActionNamesForOnePermission($permission)
     {
         $actionNamesForOnePermission = [];
@@ -187,5 +401,26 @@ class AdminActionController extends Controller
         $actionNamesForOnePermission[] = $actionNames;
 
         return $actionNamesForOnePermission;
+    }
+
+    private function getPermissionNamesForOneAction($action)
+    {
+        $permisionNamesForOneAction = [];
+
+        $permisisonNames = DB::table('permissions as p')
+            ->whereExists(
+                fn ($query) =>
+                $query
+                    ->select(DB::raw(1))
+                    ->from('permission_actions as pa')
+                    ->whereColumn('pa.permission_id', '=', 'p.id')
+                    ->where('action_id', '=', $action->id)
+                    ->groupBy('pa.permission_id')
+            )
+            ->select('p.name as name', 'p.id as id')
+            ->get();
+        $permisionNamesForOneAction[] = $permisisonNames;
+
+        return $permisionNamesForOneAction;
     }
 }

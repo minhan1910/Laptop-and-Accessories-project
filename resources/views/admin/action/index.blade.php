@@ -4,6 +4,11 @@
     Action
 @endsection
 
+@section('css')
+    <link href="{{ asset('vendors/select2/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('admins/action/edit/edit.css') }}" rel="stylesheet" />
+@endsection
+
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -14,6 +19,20 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    @if (Session::has('msg'))
+                        <div class="col-md-12">
+                            <div class="alert alert-success">
+                                {{ session('msg') }}
+                            </div>
+                        </div>
+                    @endif
+                    @if (Session::has('error'))
+                        <div class="col-md-12">
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        </div>
+                    @endif
                     <div class="col-md-12">
                         <a href="{{ route('admin.actions.create') }}" class="btn btn-success float-right m-2">Add</a>
                     </div>
@@ -42,7 +61,7 @@
                                         <td>
                                             <a href="{{ route('admin.actions.edit', $action) }}"
                                                 class="btn btn-default">Edit</a>
-                                            <a href="{{ route('admin.actions.delete', $action) }}"
+                                            <a href="{{ route('admin.actions.get-delete', $action) }}"
                                                 class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
@@ -57,4 +76,10 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('js')
+    <script src="{{ asset('vendors/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('admins/action/edit/edit.js') }}"></script>
 @endsection

@@ -18,12 +18,15 @@ Route::prefix('actions')
         Route::post('/store', [AdminActionController::class, 'store'])
             ->name('store');
 
-        Route::get('/edit/{id}', [AdminActionController::class, 'edit'])
+        Route::get('/edit/{action}', [AdminActionController::class, 'edit'])
             ->name('edit');
 
-        Route::post('/update/{id}', [AdminActionController::class, 'update'])
+        Route::post('/update', [AdminActionController::class, 'update'])
             ->name('update');
 
-        Route::get('/delete/{id}', [AdminActionController::class, 'delete'])
+        Route::get('/delete/{action}', [AdminActionController::class, 'getDelete'])
+            ->name('get-delete');
+
+        Route::post('/delete', [AdminActionController::class, 'delete'])
             ->name('delete');
     });
