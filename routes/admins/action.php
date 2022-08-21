@@ -9,6 +9,9 @@ Route::prefix('actions')
         Route::get('/', [AdminActionController::class, 'index'])
             ->name('index');
 
+        Route::get('/select', [AdminActionController::class, 'selectPermisison'])
+            ->name('select-permisison_name');
+
         Route::get('/create', [AdminActionController::class, 'create'])
             ->name('create');
 

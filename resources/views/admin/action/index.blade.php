@@ -21,17 +21,24 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Permisison name</th>
-                                    <th scope="col">Permisison actions name</th>
+                                    <th scope="col" class="text-center">#</th>
+                                    <th scope="col">Action name</th>
+                                    <th scope="col">Action has permissions</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($actions as $action)
+                                @foreach ($actions as $action)
                                     <tr>
-                                        <td>{{ $action->id }}</td>
+                                        <td class="text-center">{{ $action->id }}</td>
                                         <td>{{ $action->name }}</td>
+                                        <td>
+                                            @if (array_key_exists($action->name, $permisisonNamesForEachAction))
+                                                @foreach ($permisisonNamesForEachAction[$action->name] as $permission)
+                                                    {{ $permission->name }}
+                                                @endforeach
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('admin.actions.edit', $action) }}"
                                                 class="btn btn-default">Edit</a>
@@ -39,12 +46,12 @@
                                                 class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-12">
-                        {{-- {{ $actions->links() }} --}}
+                        {{ $actions->links() }}
                     </div>
                 </div>
             </div>
