@@ -18,7 +18,8 @@ class CreatePermissionsTable extends Migration
 
             $table->string('name');
 
-            $table->string('dispaly_name');
+            $table
+                ->string('display_name');
 
             $table
                 ->tinyInteger('active')

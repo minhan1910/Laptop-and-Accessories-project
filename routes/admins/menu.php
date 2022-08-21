@@ -11,25 +11,25 @@ Route::prefix('menus')
 
         Route::get('/', [MenuController::class, 'index'])
             ->name('index')
-            ->middleware('can:menu-list');
+            ->middleware('can:menu.list');
 
         Route::get('/create', [MenuController::class, 'create'])
             ->name('create')
-            ->middleware('can:menu-add');
+            ->middleware('can:menu.create');
 
         Route::post('/store', [MenuController::class, 'store'])
             ->name('store')
-            ->middleware('can:menu-store');
+            ->middleware('can:menu.create');
 
         Route::get('/edit/{id}', [MenuController::class, 'edit'])
             ->name('edit')
-            ->middleware('can:menu-edit');
+            ->middleware('can:menu.edit');
 
         Route::post('/update/{id}', [MenuController::class, 'update'])
             ->name('update')
-            ->middleware('can:menu-update');
+            ->middleware('can:menu.update');
 
         Route::get('/delete/{id}', [MenuController::class, 'delete'])
             ->name('delete')
-            ->middleware('can:menu-delete');
+            ->middleware('can:menu.delete');
     });
