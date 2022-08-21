@@ -20,14 +20,15 @@
                         <form action="{{ route('admin.categories.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="email">Tên danh mục</label>
-                                <input type="text" class="form-control" placeholder="Nhập tên danh mục..." name="name">
+                                <label for="email">Category name</label>
+                                <input type="text" class="form-control" placeholder="Enter category name..."
+                                    name="name">
                             </div>
 
                             <div class="form-group">
-                                <label for="">Chọn danh mục cha</label>
+                                <label for="">Parent category name</label>
                                 <select class="form-control" name="parent_id">
-                                    <option value="0">Chọn danh mục cha</option>
+                                    <option value="0">Choose parent category</option>
                                     {!! $htmlOption !!}
                                 </select>
                             </div>
