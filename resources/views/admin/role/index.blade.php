@@ -54,9 +54,9 @@
                                         <td>{{ $role->description }}</td>
                                         <td>{{ $role->created_by }}</td>
                                         <td width="10%">
-                                            <a href="{{ route('admin.permissions.create') }}"
+                                            <a href="{{ route('admin.roles.permission', $role) }}"
                                                 class="btn btn-primary form-control">
-                                                Authorize
+                                                <span>Authorize</span>
                                             </a>
                                         </td>
                                         <td width="15%">
