@@ -58,7 +58,7 @@
                                                 <div class="alert alert-info d-flex justify-content-center">
                                                     {{ $product->category->name ?? '' }}</div>
                                             </td>
-                                            <td>{{ $product->content }}</td>
+                                            <td>{!! $product->content !!}</td>
                                             <td>{{ $product->created_at }}</td>
                                             <td>{{ $product->updated_at }}</td>
                                             <td width="15%">

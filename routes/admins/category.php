@@ -8,6 +8,7 @@ Route::prefix('categories')
     ->name('categories.')
     ->group(function () {
         Route::get('/', [CategoryController::class, 'index'])
+
             ->name('index')
             ->middleware('can:category.list');
 
@@ -31,3 +32,4 @@ Route::prefix('categories')
             ->name('delete')
             ->middleware('can:category.delete');
     });
+

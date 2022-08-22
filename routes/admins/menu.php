@@ -10,6 +10,7 @@ Route::prefix('menus')
     ->group(function () {
 
         Route::get('/', [MenuController::class, 'index'])
+
             ->name('index')
             ->middleware('can:menu.list');
 
@@ -33,3 +34,4 @@ Route::prefix('menus')
             ->name('delete')
             ->middleware('can:menu.delete');
     });
+

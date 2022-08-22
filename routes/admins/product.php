@@ -10,6 +10,7 @@ Route::prefix('products')
     ->group(function () {
 
         Route::get('/', [AdminProductController::class, 'index'])
+
             ->name('index')
             ->middleware('can:product.list');
 
@@ -33,3 +34,4 @@ Route::prefix('products')
             ->name('delete')
             ->middleware('can:product.delete');
     });
+
