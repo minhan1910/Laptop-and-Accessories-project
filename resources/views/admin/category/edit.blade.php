@@ -20,15 +20,15 @@
                         <form action="{{ route('admin.categories.update', ['id' => $category->id]) }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="email">Tên danh mục</label>
-                                <input type="text" class="form-control" placeholder="Nhập tên danh mục..." name="name"
+                                <label for="email">Category Name</label>
+                                <input type="text" class="form-control" placeholder="Category name..." name="name"
                                     value="{{ $category->name }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="">Chọn danh mục cha</label>
                                 <select class="form-control" name="parent_id">
-                                    <option value="0">Chọn danh mục cha</option>
+                                    <option value="0">Parent Category</option>
                                     {!! $htmlOption !!}
                                 </select>
                             </div>

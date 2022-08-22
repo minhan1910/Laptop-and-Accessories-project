@@ -26,7 +26,7 @@
                         </ul>
                         <div class="brand">Brand: Acer</div>
                         <p class="sell_price">
-                            Sell price: <span class="sell-detail">{{ $product->price }}</span>
+                            Sell price: <span class="sell-detail">{{ $product->price }}đ</span>
                         </p>
                         <div class="desc">
                             Product Description:
