@@ -8,9 +8,18 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/home', function () {
     return view('home');
 })->name('home');
+
 Route::get('/', [AdminController::class, 'loginAdmin']);
 Route::post('/', [AdminController::class, 'postLoginAdmin']);
+
+
 Route::get('dashboards', [AdminDashBoardController::class, 'index'])->name('dashboards.index');
+
+Route::get('logout', function () {
+    Auth::logout();
+    return redirect()
+        ->route('admin.login');
+})->name('logout');
 
 include 'product.php';
 include 'category.php';
