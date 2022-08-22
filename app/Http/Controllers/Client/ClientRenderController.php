@@ -21,7 +21,7 @@ class ClientRenderController extends Controller
         $gamingList = $this->category::find(1)->products->sortByDesc('created_at')->take(4);
         $officeList =$this->category::find(2)->products->sortByDesc('created_at')->take(4);
         $gamingId = $this->category::find(1)->id;
-        $officeId = $this->category::find(1)->id;
+        $officeId = $this->category::find(2)->id;
         return view('client.home',compact('gamingList','gamingId','officeList','officeId'));
     }
     public function getList($id)

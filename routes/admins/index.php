@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\AdminDashBoardController;
 Route::get('/home', function () {
     return view('home');
 })->name('home');
 
 Route::get('/', [AdminController::class, 'loginAdmin']);
 Route::post('/', [AdminController::class, 'postLoginAdmin']);
-
+Route::get('dashboards',[AdminDashBoardController::class,'index'])->name('dashboards.index');
 include 'product.php';
 include 'category.php';
 include 'menu.php';
