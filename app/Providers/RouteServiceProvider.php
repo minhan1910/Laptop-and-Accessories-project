@@ -17,7 +17,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/admin/home';
+    public const ADMIN = '/admin';
 
     /**
      * The controller namespace for the application.
@@ -55,7 +56,7 @@ class RouteServiceProvider extends ServiceProvider
 
     public function mapAdminWebRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web', 'auth'])
             ->prefix('admin')
             ->namespace($this->namespace)
             ->name('admin.')
