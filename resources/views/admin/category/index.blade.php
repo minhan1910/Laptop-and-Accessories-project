@@ -22,7 +22,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Tên danh mục</th>
+                                    <th scope="col">Category name</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
