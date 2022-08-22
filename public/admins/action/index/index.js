@@ -18,12 +18,14 @@ function actionSelect(e) {
             let actionCurrentNamesHtml = "";
             let optionsHtml = "";
             let marked = "";
+            
             response.data[0].forEach((permission) => {
                 actionNamesHtml += `${marked}${permission.name}`;
                 actionCurrentNamesHtml += `${marked}${permission.name}`;
                 optionsHtml += `<option value="${permission.id}" selected></option>`;
                 marked = "/";
             });
+
             renderActionNames(
                 actionCurrentNamesHtml,
                 actionNamesHtml,
