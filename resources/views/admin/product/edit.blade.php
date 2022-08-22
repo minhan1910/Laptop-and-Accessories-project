@@ -103,6 +103,26 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-3 col-sm-3 ">Brand</label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <select class="form-control" name="brand_id">
+                                                <option value="0">Type</option>
+                                                @if (!empty('brandList'))
+                                                    @foreach ($brandList as $brand)
+                                                        <option value="{{ $brand->id }}"
+                                                            {{ old('brand_id') ?? $productInfo->brand_id == $brand->id ? 'selected' : '' }}>
+                                                            {{ $brand->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            @error('category')
+                                                <span style="color:red">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-9 col-sm-9  offset-md-3">
