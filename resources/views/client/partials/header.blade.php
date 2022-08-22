@@ -52,7 +52,7 @@
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="./assets/img/icon/laptop.png" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt="" class="categories-icon" />
                             <span class="categories-desc">Office Laptop</span>
                         </a>
                         <ul class="sub-menu">
@@ -67,7 +67,7 @@
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="./assets/img/icon/laptop.png" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt="" class="categories-icon" />
                             <span class="categories-desc">PC Industry</span>
                         </a>
                         <ul class="sub-menu">
@@ -80,26 +80,26 @@
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="./assets/img/icon/laptop.png" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt="" class="categories-icon" />
                             <span class="categories-desc">PC Gaming - Designer</span>
                         </a>
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="./assets/img/icon/electrical-component.png" alt=""
+                            <img src="{{ asset('clients/img/icon/electrical-component.png') }}" alt=""
                                 class="categories-icon" />
                             <span class="categories-desc">Screen</span>
                         </a>
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="./assets/img/icon/keyboard.png" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/keyboard.png') }}" alt="" class="categories-icon" />
                             <span class="categories-desc">Keyboard</span>
                         </a>
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="./assets/img/icon/apple.png" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/apple.png') }}" alt="" class="categories-icon" />
                             <span class="categories-desc">Apple</span>
                         </a>
                     </li>

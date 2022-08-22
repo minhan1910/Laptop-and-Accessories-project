@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use  App\Models\Category;
+use  App\Models\Brand;
 use App\Models\ProductImage;
 use App\Http\Requests\ProductAddRequest;
 use Illuminate\Support\Facades\DB;
@@ -19,11 +20,12 @@ class AdminProductController extends Controller
        private $category;
        private $productImage;
        use StorageImageTrait;
-        public function __construct(Product $product,Category $category,ProductImage $productImage)
+        public function __construct(Product $product,Category $category,ProductImage $productImage,Brand $brand)
         {
             $this->product = $product;
             $this->category = $category;
             $this->productImage = $productImage;
+            $this->brand = $brand;
         }
         public function index()
         {
@@ -33,7 +35,8 @@ class AdminProductController extends Controller
         public function create()
         {
             $categoryList = $this->category::all();
-            return view('admin.product.add',compact('categoryList'));
+            $brandList = $this->brand::all();
+            return view('admin.product.add',compact('categoryList','brandList'));
         }
         public function store(ProductAddRequest $request)
         {
@@ -45,7 +48,8 @@ class AdminProductController extends Controller
                         'price' => $request->price,
                         'content' => $request->content,
                         'user_id' => Auth::user()->id,
-                        'category_id' => $request->category_id
+                        'category_id' => $request->category_id,
+                        'brand_id'=>$request->brand_id
                     ];
                     $dataUploadFeatureImage = $this->storageTraitUpload($request, 'feature_image_path', 'product');
                     if (!empty($dataUploadFeatureImage)) {
@@ -79,8 +83,9 @@ class AdminProductController extends Controller
         }
         public function edit($id)
         {      $categoryList = $this->category::all();
+               $brandList = $this->brand::all();
                $productInfo = $this->product::find($id);
-            return view('admin.product.edit',compact('categoryList','productInfo'));
+            return view('admin.product.edit',compact('categoryList','productInfo','brandList'));
         }
         public function update(ProductAddRequest $request,$id)
         {
@@ -91,7 +96,8 @@ class AdminProductController extends Controller
                     'price' => $request->price,
                     'content' => $request->content,
                     'user_id' => Auth::user()->id,
-                    'category_id' => $request->category_id
+                    'category_id' => $request->category_id,
+                    'brand_id'=>$request->brand_id
                 ];
 
                 $dataUploadFeatureImage = $this->storageTraitUpload($request, 'feature_image_path', 'product');
@@ -128,7 +134,7 @@ class AdminProductController extends Controller
                 }
                 $product->images()->insert($productImages);
                 DB::commit();
-                $msg = 'Add product successfully !';
+                $msg = 'Update product successfully !';
             } catch (\Exception $e) {
                 DB::rollback();
                 $msg = 'Add product failed !';
