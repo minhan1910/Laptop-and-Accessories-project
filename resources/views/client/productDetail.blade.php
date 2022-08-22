@@ -24,7 +24,7 @@
                             <li>Support renewal in 7 days</li>
                             <li>Windows copyright integrated</li>
                         </ul>
-                        <div class="brand">Brand: Acer</div>
+                        <div class="brand">Brand: {{$product->brand->name}}</div>
                         <p class="sell_price">
                             Sell price: <span class="sell-detail">{{ $product->price }}đ</span>
                         </p>

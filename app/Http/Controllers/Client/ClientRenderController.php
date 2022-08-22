@@ -6,15 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Brand;
 class ClientRenderController extends Controller
 {
     //
     private $product;
     private $category;
-    public function __construct(Product $product,Category $category)
+    private $brand;
+    public function __construct(Product $product,Category $category,Brand $brand)
     {
         $this->product = $product;
         $this->category = $category;
+        $this->brand = $brand;
     }
     public function index()
     {
