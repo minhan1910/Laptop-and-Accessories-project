@@ -8,7 +8,6 @@ Route::prefix('categories')
     ->name('categories.')
     ->group(function () {
         Route::get('/', [CategoryController::class, 'index'])
-
             ->name('index')
             ->middleware('can:category.list');
 
