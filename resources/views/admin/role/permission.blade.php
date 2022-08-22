@@ -33,7 +33,10 @@
                                 </div>
                             </div>
                         @endif
-
+                        <div class="col-md-12">
+                            <label for="">Check all permissions</label>
+                            <input type="checkbox" class="checkAll">
+                        </div>
                         <div class="col-md-12">
                             <table class="table table-bordered">
                                 <thead>
@@ -46,7 +49,9 @@
                                     @if ($permissions->count() > 0)
                                         @foreach ($permissions as $permission)
                                             <tr>
-                                                <td width="20%">{{ $permission->name }}</td>
+                                                <td width="20%">
+                                                    {{ $permission->name }}
+                                                </td>
                                                 <td>
                                                     <div class="row">
                                                         @if (array_key_exists($permission->name, $actionNamesForEachPermission))
@@ -56,7 +61,7 @@
                                                                         for="role_{{ $permission->name }}_{{ $action->name }}">
                                                                         {{ $action->name }}
                                                                     </label>
-                                                                    <input type="checkbox"
+                                                                    <input type="checkbox" class="checkbox_children"
                                                                         name="role[{{ $permission->name }}][]"
                                                                         id="role_{{ $permission->name }}_{{ $action->name }}"
                                                                         value="{{ $action->name }}"
@@ -81,4 +86,22 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(function() {
+
+            $('.checkAll').on('click', function() {
+                $(this)
+                    .parents()
+                    .find('.checkbox_children')
+                    .prop(
+                        'checked',
+                        $(this).prop('checked')
+                    );
+            });
+
+        })
+    </script>
 @endsection
