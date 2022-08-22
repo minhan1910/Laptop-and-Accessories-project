@@ -98,7 +98,7 @@
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            @error('category')
+                                            @error('category_id')
                                                 <span style="color:red">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -118,7 +118,7 @@
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            @error('category')
+                                            @error('brand_id')
                                                 <span style="color:red">{{ $message }}</span>
                                             @enderror
                                         </div>
