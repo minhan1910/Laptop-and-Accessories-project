@@ -22,6 +22,13 @@
                         </div>
                     </div>
                 @endif
+                @if (session('err'))
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger }}">{{ session('err') }}</div>
+                        </div>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{{ route('admin.products.create') }}" class="btn btn-success float-right m-2">Add new
@@ -43,7 +50,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty('productList'))
+                                @if ($productList->count() > 0)
                                     @foreach ($productList as $product)
                                         <tr>
                                             <td>{{ $product->id }}</td>

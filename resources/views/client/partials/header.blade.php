@@ -13,14 +13,29 @@
                 </button>
             </div>
             <div class="cto">
-                <a href="" class="regist cto-select">
+                <a href="{{ route('client.registation') }}" class="regist cto-select">
                     <img src="{{ asset('clients/img/icon/contract.png') }}" class="cto-icon" alt="" />
                     <span class="cto-sub">Regist</span>
                 </a>
-                <a href="" class="login cto-select">
-                    <img src="{{ asset('clients/img/icon/user.png') }}" alt="" class="cto-icon" />
-                    <span class="cto-sub">Login</span>
-                </a>
+                @if (!Auth::check())
+                    <a href="{{ route('client.login') }}" class="login cto-select">
+                        <img src="{{ asset('clients/img/icon/user.png') }}" alt="" class="cto-icon" />
+                        <span class="cto-sub">Login</span>
+                    </a>
+                @else
+                    <form action="{{ route('client.logout') }}" method="post" enctype="multipart/form">
+                        @csrf
+                        <div style="display:flex;">
+                            <a href="" class="login cto-select">
+                                <button class="cto-sub" style="background-color:red; color:white">Logout</button>
+                            </a>
+                            <a href="" class="login cto-select">
+                                <img src="{{ asset('clients/img/icon/user.png') }}" alt="" class="cto-icon" />
+                                <span class="cto-sub">User</span>
+                            </a>
+                        </div>
+                    </form>
+                @endif
                 <a href="" class="cart cto-select">
                     <img src="{{ asset('clients/img/icon/shopping-cart.png') }}" alt="" class="cto-icon" />
                     <span>Cart</span>
@@ -31,7 +46,7 @@
     <div class="header_bot">
         <div class="container">
             <div class="categories">
-                <img src="{{asset('clients/img/icon/menu.png')}}" class="categories_img" alt="" />
+                <img src="{{ asset('clients/img/icon/menu.png') }}" class="categories_img" alt="" />
                 <span>Categories</span>
                 <ul class="categories_list">
                     <li class="categories_sub">
@@ -52,7 +67,8 @@
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt=""
+                                class="categories-icon" />
                             <span class="categories-desc">Office Laptop</span>
                         </a>
                         <ul class="sub-menu">
@@ -67,7 +83,8 @@
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt=""
+                                class="categories-icon" />
                             <span class="categories-desc">PC Industry</span>
                         </a>
                         <ul class="sub-menu">
@@ -80,7 +97,8 @@
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/laptop.png') }}" alt=""
+                                class="categories-icon" />
                             <span class="categories-desc">PC Gaming - Designer</span>
                         </a>
                     </li>
@@ -93,13 +111,15 @@
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="{{ asset('clients/img/icon/keyboard.png') }}" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/keyboard.png') }}" alt=""
+                                class="categories-icon" />
                             <span class="categories-desc">Keyboard</span>
                         </a>
                     </li>
                     <li class="categories_sub">
                         <a href="" class="categories-item">
-                            <img src="{{ asset('clients/img/icon/apple.png') }}" alt="" class="categories-icon" />
+                            <img src="{{ asset('clients/img/icon/apple.png') }}" alt=""
+                                class="categories-icon" />
                             <span class="categories-desc">Apple</span>
                         </a>
                     </li>

@@ -26,7 +26,9 @@ class MenuController extends Controller
 
     public function create()
     {
-        $optionSelect = $this->menuRecursive->menuRecursiveAdd();
+        $optionSelect = $this
+            ->menuRecursive
+            ->menuRecursiveAdd();
         return view('admin.menus.add', compact('optionSelect'));
     }
 

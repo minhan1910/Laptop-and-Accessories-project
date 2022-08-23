@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Action;
 use App\Models\Permission;
 use App\Models\User;
 use App\Traits\UtilPermissionAndActionTrait;
@@ -43,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
 
         foreach ($permissions as $permission) {
             foreach ($actionNamesForEachPermission[$permission->name] as $action) {
+
                 Gate::define(
                     $permission->name . '.' . $action->name,
                     function (User $user) use ($permission, $action) {
@@ -55,7 +55,6 @@ class AuthServiceProvider extends ServiceProvider
 
                             return $check;
                         }
-
                         return false;
                     }
                 );

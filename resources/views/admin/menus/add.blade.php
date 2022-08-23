@@ -17,7 +17,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
-                        <form action="" method="POST">
+                        <form action="{{ route('admin.menus.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label for="email">Tên menu</label>

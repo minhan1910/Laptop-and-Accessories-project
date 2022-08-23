@@ -40,7 +40,7 @@ class AdminActionController extends Controller
     {
         $permissions = $this
             ->permission::orderBy('created_at', 'DESC')
-            ->paginate(4);
+            ->get();
 
         $actionNamesForEachPermission = $this
             ->getActionNamesForEachPermission($permissions);

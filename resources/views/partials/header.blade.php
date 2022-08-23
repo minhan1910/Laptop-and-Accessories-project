@@ -11,6 +11,12 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
         </li>
+        <form action="{{ route('admin.logout') }}" method="post">
+            @csrf
+            <li class="nav-item d-none d-sm-inline-block">
+                <button style="background-color:black; color:red;">Logout</button>
+            </li>
+        </form>
     </ul>
 
     <!-- SEARCH FORM -->
