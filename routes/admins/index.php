@@ -1,26 +1,39 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminDashBoardController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminLoginController;
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('login', [AdminLoginController::class, 'showLoginForm'])
+    ->name('login');
 
-Route::get('/login', [AdminController::class, 'loginAdmin']);
-Route::post('/login', [AdminController::class, 'postLoginAdmin']);
-Route::get('dashboards', [AdminDashBoardController::class, 'index'])->name('dashboards.index');
+Route::post('login', [AdminLoginController::class, 'login'])
+    ->name('post-login');
 
-include 'product.php';
-include 'category.php';
-include 'menu.php';
-// include 'slider.php';
-// include 'setting.php';
-include 'role.php';
-include 'user.php';
-include 'permission.php';
+Route::get('logout', function () {
+    Auth()->logout();
+    return redirect()
+        ->route('admin.login');
+})
+    ->middleware('auth')
+    ->name('logout');
 
-include 'action.php';
-include 'brand.php';
+Route::middleware(['AuthAdmin', 'PreventBackHistory'])->group(function () {
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
+
+    Route::get('dashboards', [AdminDashBoardController::class, 'index'])->name('dashboards.index');
+
+    include 'product.php';
+    include 'category.php';
+    include 'menu.php';
+    // include 'slider.php';
+    // include 'setting.php';
+    // include 'permission.php';
+    include 'role.php';
+    include 'user.php';
+
+    include 'action.php';
+    include 'brand.php';
+});
