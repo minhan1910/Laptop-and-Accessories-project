@@ -5,10 +5,23 @@
         <section class="login_main">
             <div class="container">
                 <h2 class="title">Login</h2>
-                <form class="login-form">
-                    <input type="text" id="uname" name="uname" placeholder="email..." /><br />
+                <form class="login-form" method="post" action="{{ route('client.post-login') }}">
+                    @csrf
+                    <input type="text" id="email" name="email" placeholder="email..." /><br />
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong class="text-danger">{{ $message }}</strong>
+                        </span>
+                        <br>
+                    @enderror
                     <input type="password" id="password" name="password" placeholder="Password..." />
-                    <a href="" class="submit-btn">Login</a>
+                    @error('password')
+                        <br>
+                        <span class="invalid-feedback" role="alert">
+                            <strong class="text-danger">{{ $message }}</strong>
+                        </span>
+                    @enderror
+                    <button class="submit-btn">Login</button>
                 </form>
                 <span class="another-option">Or</span>
                 <div class="social-login">

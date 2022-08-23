@@ -43,7 +43,7 @@
             <div class="container">
                 <div class="top_product-top">
                     <h2 class="title">Highend Laptop Gaming</h2>
-                    <a href="{{route('client.list',['id'=>$officeId])}}" class="view_all">View all</a>
+                    <a href="{{ route('client.list', ['id' => $officeId]) }}" class="view_all">View all</a>
                 </div>
                 @if (!empty('gamingList'))
                     <div class="top_product-list">
@@ -57,7 +57,8 @@
                                     <p class="name">{{ $gamingItem->name }}</p>
                                     <div class="bottom">
                                         <p class="price">{{ $gamingItem->price }}₫</p>
-                                        <a href="{{route('client.detail',['id'=>$gamingItem->id])}}" class="view-detail">View details</a>
+                                        <a href="{{ route('client.detail', ['id' => $gamingItem->id]) }}"
+                                            class="view-detail">View details</a>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +84,8 @@
                                     <p class="name">{{ $officeItem->name }}</p>
                                     <div class="bottom">
                                         <p class="price">{{ $officeItem->price }}</p>
-                                        <a href="{{route('client.detail',['id'=>$officeItem->id])}}" class="view-detail">View details</a>
+                                        <a href="{{ route('client.detail', ['id' => $officeItem->id]) }}"
+                                            class="view-detail">View details</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,4 +96,3 @@
         </section>
     </main>
 @endsection
-
