@@ -52,16 +52,6 @@ class ClientLoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // protected function redirectTo()
-    // {
-    //     if (Auth()->user()->isAdmin == 0) {
-    //         return route('admin.home');
-    //     } else {
-    //         Auth()->logout();
-    //         return route('admin.login');
-    //     }
-    // }
-
     /**
      * Handle a login request to the application.
      *

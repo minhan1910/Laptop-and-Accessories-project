@@ -2,7 +2,7 @@
     <div class="header_top" style=" background-image: url('{{ asset('clients/img/banner/banner.jpg') }}');"></div>
     <div class="header_middle">
         <div class="container">
-            <a href="" class="logo">
+            <a href="{{ route('client.home') }}" class="logo">
                 <img srcset="{{ asset('clients/img/logo/main-logo.png 2x') }}" class="logo-img" alt="" />
             </a>
             <div class="search">

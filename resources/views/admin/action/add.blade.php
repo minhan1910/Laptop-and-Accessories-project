@@ -43,7 +43,7 @@
 
                             <div class="form-group">
                                 <label for="name">Current action name</label>
-                                <input type="text" class="form-control action_names" disabled>
+                                <input type="text" class="form-control action_current_names" disabled>
                                 <select class="action_names_hidden" name="actions[]" multiple="multiple" hidden></select>
                             </div>
 
@@ -61,5 +61,5 @@
 
 @section('js')
     <script src="{{ asset('vendors/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('admins/action/add/add.js') }}"></script>
+    <script src="{{ asset('admins/action/index/index.js') }}"></script>
 @endsection

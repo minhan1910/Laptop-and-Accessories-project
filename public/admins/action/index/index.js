@@ -14,13 +14,13 @@ function actionSelect(e) {
             permissionId: value,
         },
         success: function (response) {
-            let actionNamesHtml = "";
+            // let actionNamesHtml = "";
             let actionCurrentNamesHtml = "";
             let optionsHtml = "";
             let marked = "";
-            
+
             response.data[0].forEach((permission) => {
-                actionNamesHtml += `${marked}${permission.name}`;
+                // actionNamesHtml += `${marked}${permission.name}`;
                 actionCurrentNamesHtml += `${marked}${permission.name}`;
                 optionsHtml += `<option value="${permission.id}" selected></option>`;
                 marked = "/";
@@ -28,7 +28,7 @@ function actionSelect(e) {
 
             renderActionNames(
                 actionCurrentNamesHtml,
-                actionNamesHtml,
+
                 optionsHtml
             );
         },
@@ -37,15 +37,15 @@ function actionSelect(e) {
 
 $(".select_permission").on("change", actionSelect);
 const actionCurrentNames = document.querySelector(".action_current_names");
-const actionNames = document.querySelector(".action_names");
+// const actionNames = document.querySelector(".action_names");
 const actionNamesHidden = document.querySelector(".action_names_hidden");
 
 function renderActionNames(
     actionCurrentNamesHtml,
-    actionNamesHtml,
+    // actionNamesHtml,
     optionsHtml
 ) {
     actionCurrentNames.value = actionCurrentNamesHtml;
-    actionNames.value = actionNamesHtml;
+    // actionNames.value = actionNamesHtml;
     actionNamesHidden.innerHTML = optionsHtml;
 }

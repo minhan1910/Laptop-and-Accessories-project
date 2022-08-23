@@ -116,8 +116,7 @@ class AdminActionController extends Controller
     public function edit(Request $request, Action $action)
     {
         $permissions = $this
-            ->permission::orderBy('created_at', 'DESC')
-            ->paginate(4);
+            ->permission::orderBy('created_at', 'DESC')->get();
 
         $currentPermisisons = $this
             ->getPermissionNamesForOneAction($action);
@@ -176,16 +175,14 @@ class AdminActionController extends Controller
                 $amountOfActionCurrents[0]->count < 2
             ) {
                 // update
-                if ($existsActionInCurrentPermssion) {
-                    $this
-                        ->action
-                        ::find($actionId)
-                        ->update([
-                            'name' => $request->name,
-                            'display_name' => $request->display_name,
-                            'updated_by' => Auth::user()->name,
-                        ]);
-                }
+                $this
+                    ->action
+                    ::find($actionId)
+                    ->update([
+                        'name' => $request->name,
+                        'display_name' => $request->name,
+                        'updated_by' => Auth::user()->name,
+                    ]);
             } else {
                 // Create
                 if (!$existsActionInCurrentPermssion) {
@@ -193,6 +190,7 @@ class AdminActionController extends Controller
                      *  After deleting the action current 
                      *  Then creating new action
                      *  */
+
                     $permission
                         ->actions()
                         ->detach($action->id);
