@@ -18,23 +18,22 @@ Route::post('logout', function () {
     ->middleware('AuthAdmin')
     ->name('logout');
 
-Route::middleware(['AuthAdmin', 'PreventBackHistory'])->group(function () {
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
+Route::middleware(['AuthAdmin', 'PreventBackHistory'])
+    ->group(function () {
+        Route::get('/home', function () {
+            return view('home');
+        })->name('home');
 
-    Route::get('dashboards', [AdminDashBoardController::class, 'index'])
-        ->name('dashboards.index');
+        Route::get('dashboards', [AdminDashBoardController::class, 'index'])
+            ->name('dashboards.index');
 
-    include 'product.php';
-    include 'category.php';
-    include 'menu.php';
-    // include 'slider.php';
-    // include 'setting.php';
-    // include 'permission.php';
-    include 'role.php';
-    include 'user.php';
+        include 'product.php';
+        include 'category.php';
+        include 'menu.php';
 
-    include 'action.php';
-    include 'brand.php';
-});
+        include 'role.php';
+        include 'user.php';
+
+        include 'action.php';
+        include 'brand.php';
+    });

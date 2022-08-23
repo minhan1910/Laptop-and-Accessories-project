@@ -21,11 +21,10 @@ class AuthAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        $accessment = Auth::user()->isAdmin;
         if (
             Auth::check() &&
             $this->canAccessAdmin(
-                $accessment,
+                Auth::user()->isAdmin,
                 [RoleEnum::fromString('ADMIN')]
             )
         ) {

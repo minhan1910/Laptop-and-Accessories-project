@@ -26,7 +26,8 @@ class User extends Authenticatable
         'password',
         'street',
         'ward',
-        'district'
+        'district',
+        'isAdmin',
     ];
 
     /**
