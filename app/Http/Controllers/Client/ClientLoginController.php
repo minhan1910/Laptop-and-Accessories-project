@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Enum\AccessLoginEnum;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Traits\VerifyAuthentication;
@@ -91,7 +92,13 @@ class ClientLoginController extends Controller
         }
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            if ($this->canAccessClient(auth()->user()->isAdmin, [1, 0])) {
+            if ($this->canAccessClient(
+                auth()->user()->isAdmin,
+                [
+                    AccessLoginEnum::fromString('ADMIN'),
+                    AccessLoginEnum::fromString('CLIENT')
+                ]
+            )) {
                 return redirect()->route('client.home');
             }
         } else {

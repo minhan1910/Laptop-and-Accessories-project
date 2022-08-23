@@ -33,5 +33,3 @@ Route::prefix('menus')
             ->name('delete')
             ->middleware('can:menu.delete');
     });
-
-

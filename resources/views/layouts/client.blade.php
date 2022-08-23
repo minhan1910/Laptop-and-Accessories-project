@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,6 +11,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.icon') }}" />
     @yield('css')
 </head>
+
 <body id="@yield('page-id')">
     {{-- Header --}}
     @include('client.partials.header')
@@ -23,4 +25,5 @@
     <script src="{{ asset('clients/index/_main.js') }}"></script>
     @yield('js')
 </body>
+
 </html>

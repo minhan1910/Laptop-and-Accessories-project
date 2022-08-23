@@ -10,12 +10,12 @@ Route::get('login', [AdminLoginController::class, 'showLoginForm'])
 Route::post('login', [AdminLoginController::class, 'login'])
     ->name('post-login');
 
-Route::get('logout', function () {
+Route::post('logout', function () {
     Auth()->logout();
     return redirect()
         ->route('admin.login');
 })
-    ->middleware('auth')
+    ->middleware('AuthAdmin')
     ->name('logout');
 
 Route::middleware(['AuthAdmin', 'PreventBackHistory'])->group(function () {
@@ -23,7 +23,8 @@ Route::middleware(['AuthAdmin', 'PreventBackHistory'])->group(function () {
         return view('home');
     })->name('home');
 
-    Route::get('dashboards', [AdminDashBoardController::class, 'index'])->name('dashboards.index');
+    Route::get('dashboards', [AdminDashBoardController::class, 'index'])
+        ->name('dashboards.index');
 
     include 'product.php';
     include 'category.php';

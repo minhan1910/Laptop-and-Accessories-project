@@ -58,6 +58,7 @@ class Kernel extends HttpKernel
         'PreventBackHistory' => \App\Http\Middleware\PreventBackHistory::class,
         'AuthAdmin' => \App\Http\Middleware\AuthAdmin::class,
         'AuthClient' => \App\Http\Middleware\AuthClient::class,
+        'AuthClientHome' => \App\Http\Middleware\AuthClientHome::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

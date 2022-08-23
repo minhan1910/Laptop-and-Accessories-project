@@ -20,11 +20,10 @@ class AuthClient
      */
     public function handle(Request $request, Closure $next)
     {
-        $accessment = Auth::user()->isAdmin;
         if (
             Auth::check() &&
             $this->canAccessClient(
-                $accessment,
+                Auth::user()->isAdmin,
                 [
                     RoleEnum::fromString('ADMIN'),
                     RoleEnum::fromString('CLIENT'),

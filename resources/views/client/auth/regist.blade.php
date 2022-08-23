@@ -5,9 +5,9 @@
         <section class="login_main">
             <div class="container">
                 <h2 class="title">Registation</h2>
-                <form class="login-form">
-                    <input type="text" id="fullname" name="fullname" placeholder="Full name..." /><br />
-                    <input type="phone" id="phone" name="phone" required placeholder="Phone number..." /><br />
+                <form class="login-form" action="{{ route('client.registation') }}" method="post">
+                    @csrf
+                    <input type="text" id="name" name="name" placeholder="Full name..." /><br />
                     <input type="text" id="email" name="email" placeholder="Email..." /><br />
                     <input type="password" id="password" name="password" placeholder="Password..." />
                     <button type="submit" value="regist" class="submit-btn">

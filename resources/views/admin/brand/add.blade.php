@@ -26,19 +26,20 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">Brand name</label>
-                                <input type="text" class="form-control" placeholder="Enter brand name..." name="name" value="{{old('name')}}">
+                                <input type="text" class="form-control" placeholder="Enter brand name..." name="name"
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="">Brand slug</label>
                                 <input type="text" class="form-control" placeholder="Enter slug name..."
                                     name="slug" value="{{old('slug')}}">
                                     @error('slug')
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
