@@ -67,7 +67,7 @@ class ClientLoginController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-        // $this->validateLogin($requestư);
+        // $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -82,13 +82,15 @@ class ClientLoginController extends Controller
         }
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            if ($this->canAccessClient(
-                auth()->user()->isAdmin,
-                [
-                    AccessLoginEnum::fromString('ADMIN'),
-                    AccessLoginEnum::fromString('CLIENT')
-                ]
-            )) {
+            if (
+                $this->canAccessClient(
+                    auth()->user()->isAdmin,
+                    [
+                        AccessLoginEnum::fromString('ADMIN'),
+                        AccessLoginEnum::fromString('CLIENT')
+                    ]
+                )
+            ) {
                 return redirect()->route('client.home');
             }
         } else {
@@ -105,5 +107,12 @@ class ClientLoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    public function logout()
+    {
+        Auth()->logout();
+        return redirect()
+            ->route('client.home');
     }
 }
