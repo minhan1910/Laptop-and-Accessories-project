@@ -11,11 +11,7 @@ Route::get('login', [ClientLoginController::class, 'showLoginForm'])
 Route::post('login', [ClientLoginController::class, 'login'])
     ->name('post-login');
 
-Route::post('logout', function () {
-    Auth()->logout();
-    return redirect()
-        ->route('client.login');
-})
+Route::post('logout', [ClientLoginController::class, 'logout'])
     ->middleware('AuthClient')
     ->name('logout');
 
@@ -27,11 +23,14 @@ Route::post('registation', [ClientRegisterController::class, 'create'])
 Route::get('/', function () {
     return redirect('/client/home');
 });
-
 Route::prefix('/home')->name('home')->group(function () {
     Route::get('/', [ClientRenderController::class, 'index']);
 });
-Route::middleware(['AuthClient', 'PreventBackHistory'])->group(function () {
-    Route::get('list/{id}', [ClientRenderController::class, 'getList'])->name('list');
-    Route::get('detail/{id}', [ClientRenderController::class, 'getDetail'])->name('detail');
-});
+Route::get('list/{id}', [ClientRenderController::class, 'getList'])->name('list');
+Route::get('detail/{id}', [ClientRenderController::class, 'getDetail'])->name('detail');
+Route::middleware(['AuthClient', 'PreventBackHistory'])
+    ->group(function () {
+        /**
+         * For checkout, profile, ...
+         */
+    });
