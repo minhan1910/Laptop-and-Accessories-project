@@ -5,13 +5,12 @@
             <a href="{{ route('client.home') }}" class="logo">
                 <img srcset="{{ asset('clients/img/logo/main-logo.png 2x') }}" class="logo-img" alt="" />
             </a>
-            <div class="search">
+            <form class="search">
                 <input type="text" name="" id="" class="search_info"
                     placeholder="Input you search in here ..." />
-                <button class="search-btn">
-                    <img srcset="{{ asset('clients/img/icon/search-icon.png 2x') }}" alt="" />
-                </button>
-            </div>
+                <ul class="search-ajax-result" hidden>
+                </ul>
+            </form>
             <div class="cto">
                 <a href="{{ route('client.registation') }}" class="regist cto-select">
                     <img src="{{ asset('clients/img/icon/contract.png') }}" class="cto-icon" alt="" />
