@@ -2,7 +2,7 @@
 
 @section('title')
     {{-- <title>Trang chủ</title> --}}
-    Trang chủ
+    Admin Page
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                     Homepage
+                        Homepage
                     </div>
                 </div>
                 <!-- /.row -->
