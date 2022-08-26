@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use Illuminate\Support\Facades\DB;
 
 class ClientRenderController extends Controller
 {
@@ -14,8 +15,9 @@ class ClientRenderController extends Controller
     private $product;
     private $category;
     private $brand;
-    const idGamingTable = 5;
-    const idOfficeTable = 3;
+
+    const idGamingTable = 1;
+    const idOfficeTable = 2;
 
     public function __construct(Product $product, Category $category, Brand $brand)
     {
@@ -66,4 +68,5 @@ class ClientRenderController extends Controller
         $product = $this->product::find($id);
         return view('client.productDetail', compact('product'));
     }
+
 }
