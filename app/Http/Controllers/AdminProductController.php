@@ -11,6 +11,7 @@ use App\Models\ProductImage;
 use App\Http\Requests\ProductAddRequest;
 use Illuminate\Support\Facades\DB;
 use App\Traits\StorageImageTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -28,12 +29,76 @@ class AdminProductController extends Controller
         $this->productImage = $productImage;
         $this->brand = $brand;
     }
-    public function index()
+
+    public function resetSearch()
     {
-        $productList = $this
-            ->product
-            ->paginate(4);
-        return view('admin.product.index', compact('productList'));
+        return redirect()->route('admin.products.index');
+    }
+
+    public function index(Request $request)
+    {
+        $data['q'] = $request->query('q');
+        $data['category_id'] = $request->query('category_id');
+        $data['brand_id'] = $request->query('brand_id');
+        $data['operator'] = $request->query('operator');
+        $data['start'] = $request->query('start');
+        $data['end'] = $request->query('end');
+        $data['price_start'] = $request->query('price_start');
+        $data['price_end'] = $request->query('price_end');
+        $data['categories'] = Category::where('parent_id', '<>', 0)->get();
+        // $data['categories'] = Category::all();
+        // $category_parents = Category::where('parent_id', '=', 0)->get();
+        // $category_parent_names = [];
+        // $category_parent_ids = [];
+        // foreach ($category_parents as $category_parent) {
+        //     $category_parent_ids[] = $category_parent->parent_id;
+        //     $category_parent_names[] = $category_parent->name;
+        // }
+        $data['brands'] = Brand::all();
+        $data['operators'] = [
+            '=' => 'equal to ( = )',
+            '<>' => 'not equal to ( != )',
+            '>' => 'greater than ( > )',
+            '>=' => 'greater than or equal to ( >= )',
+            '<' => 'less than ( < )',
+            '<=' => 'less than or equal to ( <= )',
+            'between' => 'between',
+        ];
+
+        $query = Product::select(
+            'products.*',
+        )
+            ->join('brands', 'brands.id', '=', 'products.brand_id')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->where(function (Builder $query) use ($data) {
+                $query->where('products.name', 'like', "%{$data['q']}%");
+                $query->orWhere('brands.name', 'like', "%{$data['q']}%");
+                $query->orWhere('categories.name', 'like', "%{$data['q']}%");
+            });
+
+        if ($data['category_id']) {
+            $category = Category::find($data['category_id']);
+            // if (!in_array($category->parent_id, $category_parent_ids))
+            $query->where('categories.id', '=', $data['category_id']);
+        }
+        if ($data['brand_id'])
+            $query->where('brands.id', '=', $data['brand_id']);
+        if ($data['start'])
+            $query->where('products.created_at', '>=', $data['start']);
+        if ($data['end'])
+            $query->where('products.created_at', '<=', $data['end']);
+
+        if ($data['operator'])
+            if ($data['operator'] === 'between')
+                $query->whereBetween('products.price', [$data['price_start'], $data['price_end']]);
+            else
+                $query->where('p;roducts.price', $data['operator'], $data['price_start']);
+
+        $data['productList'] = $query
+            ->paginate(8)
+            ->withQueryString();
+
+        return view('admin.product.index', $data);
     }
     public function create()
     {

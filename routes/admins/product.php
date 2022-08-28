@@ -13,6 +13,11 @@ Route::prefix('products')
             ->name('index')
             ->middleware('can:product.list');
 
+        Route::post('/reset-search', [AdminProductController::class, 'resetSearch'])
+            ->name('reset-search')
+            ->middleware('can:product.list');
+
+
         Route::get('/create', [AdminProductController::class, 'create'])
             ->name('create')
             ->middleware('can:product.create');
@@ -28,6 +33,7 @@ Route::prefix('products')
         Route::post('/update/{id}', [AdminProductController::class, 'update'])
             ->name('update')
             ->middleware('can:product.update');
+
 
         Route::get('/delete/{id}', [AdminProductController::class, 'delete'])
             ->name('delete')
