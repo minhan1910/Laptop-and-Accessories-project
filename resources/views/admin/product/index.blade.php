@@ -30,6 +30,95 @@
                     </div>
                 @endif
                 <div class="row">
+                    <div class="md-col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <form class="row row-cols-lg-auto g-1" action="">
+                                    <div class="col-md-7 mt-3 ml-3">
+                                        <span>Filter by category: </span>
+                                        <select class="form-select" name="category_id">
+                                            <option value="">All Category</option>
+                                            @foreach ($categories as $category)
+                                                @if ($category_id == $category->id)
+                                                    <option value="{{ $category->id }}"selected>
+                                                        {{ $category->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $category->id }}">
+                                                        {{ $category->name }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-7 mt-3 ml-3">
+                                        <span>Filter by brand: </span>
+                                        <select class="form-select ml-3" name="brand_id">
+                                            <option value="">All Brands</option>
+                                            @foreach ($brands as $brand)
+                                                @if ($brand_id == $brand->id)
+                                                    <option value="{{ $brand->id }}"selected>
+                                                        {{ $brand->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $brand->id }}">
+                                                        {{ $brand->name }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5 mt-3 ml-3">
+                                        <span>Filter by date: </span>
+                                        <div class="input-group">
+                                            <input type="date" class="form-control" name="start"
+                                                value="{{ $start }}">
+                                            <input type="date" class="form-control" name="end"
+                                                value="{{ $end }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 mt-3 ml-3">
+                                        <div class="input-group">
+
+                                            <div class="">
+                                                <span>Filter by price: </span>
+                                                <select class="form-select ml-3" name="operator" style="width: 200px;">
+                                                    <option value="">All price</option>
+                                                    @foreach ($operators as $key => $val)
+                                                        @if ($operator == $key)
+                                                            <option value="{{ $key }}"selected>
+                                                                {{ $val }}
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $key }}">
+                                                                {{ $val }}
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <span class="ml-2 mr-2">Price start:</span><input type="text"
+                                                class="form-control" name="price_start" value="{{ $price_start }}">
+                                            <span class="ml-2 mr-2">Price end:</span><input type="text"
+                                                class="form-control" name="price_end" value="{{ $price_end }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 mt-3 ml-3">
+                                        <input type="text" class="form-control" name="q"
+                                            value="{{ $q }}" placeholder="Search here">
+                                    </div>
+                                    <div class="col-md-5 mt-3 ml-3">
+                                        <button class="btn btn-success">Search</button>
+                                    </div>
+                                </form>
+                                <div class="col-md-12 ml-2 mt-3">
+                                    <form action="{{ route('admin.products.reset-search') }}" method="post">
+                                        @csrf
+                                        <button class="btn btn-primary">Reset</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <a href="{{ route('admin.products.create') }}" class="btn btn-success float-right m-2">Add new
                             product</a>
@@ -43,7 +132,7 @@
                                     <th scope="col">Image</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Category</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col" with="30%">Description</th>
                                     <th scope="col">Created at</th>
                                     <th scope="col">Update at</th>
                                     <th scope="col">Action</th>
@@ -59,13 +148,13 @@
                                                     src="{{ $product->feature_image_path }}" alt=""
                                                     class="img-fluid" style="width:60px; height: 60px;"></td>
                                             <td>
-                                                {{ $product->price }}
+                                                {{ number_format($product->price) }}
                                             </td>
                                             <td width="5%">
                                                 <div class="alert alert-info d-flex justify-content-center">
                                                     {{ $product->category->name ?? '' }}</div>
                                             </td>
-                                            <td>{!! $product->content !!}</td>
+                                            <td with="30%">{!! $product->content !!}</td>
                                             <td>{{ $product->created_at }}</td>
                                             <td>{{ $product->updated_at }}</td>
                                             <td width="15%">
