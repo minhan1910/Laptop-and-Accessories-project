@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SettingAddRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class SettingAdminController extends Controller
 {
     private $setting;
+
     public function __construct(Setting $setting)
     {
         $this->setting = $setting;
@@ -28,11 +30,12 @@ class SettingAdminController extends Controller
 
     public function store(SettingAddRequest $request)
     {
-        $this->setting->create([
-            'config_key' => $request->config_key,
-            'config_value' => $request->config_value,
-            'type' => $request->type
-        ]);
+        $this->setting
+            ->create([
+                'config_key' => $request->config_key,
+                'config_value' => $request->config_value,
+                'type' => $request->type
+            ]);
 
         return redirect()
             ->route('admin.settings.index')
@@ -41,7 +44,9 @@ class SettingAdminController extends Controller
 
     public function edit($id)
     {
-        $setting = $this->setting->find($id);
+        $setting = $this
+            ->setting
+            ->find($id);
         return view('admin.setting.edit', compact('setting'));
     }
 
@@ -60,11 +65,13 @@ class SettingAdminController extends Controller
             ],
         ]);
 
-        $this->setting->find($id)->update([
-            'config_key' => $request->config_key,
-            'config_value' => $request->config_value,
-            'type' => $request->type
-        ]);
+        $this->setting
+            ->find($id)
+            ->update([
+                'config_key' => $request->config_key,
+                'config_value' => $request->config_value,
+                'type' => $request->type
+            ]);
 
         return redirect()
             ->route('admin.settings.index')
@@ -73,10 +80,39 @@ class SettingAdminController extends Controller
 
     public function delete($id)
     {
-        $this->setting->find($id)->delete();
+        // $this->setting->find($id)->delete();
 
-        return redirect()
-            ->route('admin.settings.index')
-            ->with('msg', 'Update setting successfully !');
+        // return redirect()
+        //     ->route('admin.settings.index')
+        //     ->with('msg', 'Update setting successfully !');
+
+        try {
+
+            // Tạm thời xóa như vậy để sau này xong các cái khác rùi handle trường hơp này sau
+            // vì chưa có liên kết Fk
+            $this
+                ->setting
+                ->find($id)
+                ->delete();
+
+            /**
+             * product có n tags
+             *            n images
+             *            n orders
+             *            n order - 1 customer          
+             */
+
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
+        } catch (\Exception $e) {
+
+            Log::error('Message: ' . $e->getMessage() . '----- Line: ' . $e->getLine());
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ], 500);
+        }
     }
 }

@@ -55,6 +55,7 @@
                                                 Edit
                                             </a>
                                             <a href="{{ route('admin.settings.delete', ['id' => $setting->id]) . '?type=' . $setting->type }}"
+                                                data-url={{ route('admin.settings.delete', ['id' => $setting->id]) }}
                                                 class="btn btn-danger action_delete">
                                                 Delete
                                             </a>
@@ -75,5 +76,6 @@
 
 @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('admins/setting/index/list.js') }}"></script>
+    {{-- <script src="{{ asset('admins/setting/index/list.js') }}"></script> --}}
+    <script src="{{ asset('admins/main.js') }}"></script>
 @endsection
