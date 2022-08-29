@@ -43,7 +43,7 @@ class SliderAdminController extends Controller
 
         // Handle uplaod file 
         $dataImageSlider = $this->storageTraitUpload($request, 'image_path', 'slider');
-        // dd($dataImageSlider);
+
         if (!empty($dataImageSlider)) {
             $dataInsert['image_path'] = $dataImageSlider['file_path'];
             $dataInsert['image_name'] = $dataImageSlider['file_name'];
@@ -83,7 +83,7 @@ class SliderAdminController extends Controller
 
         // Handle uplaod file 
         $dataImageSlider = $this->storageTraitUpload($request, 'image_path', 'slider');
-        // dd($dataImageSlider);
+
         if (!empty($dataImageSlider)) {
             $dataUpdate['image_path'] = $dataImageSlider['file_path'];
             $dataUpdate['image_name'] = $dataImageSlider['file_name'];
