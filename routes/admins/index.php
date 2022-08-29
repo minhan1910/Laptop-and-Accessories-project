@@ -30,10 +30,10 @@ Route::middleware(['AuthAdmin', 'PreventBackHistory'])
         include 'product.php';
         include 'category.php';
         include 'menu.php';
-
+        include 'slider.php';
+        include 'setting.php';
         include 'role.php';
         include 'user.php';
-
         include 'action.php';
         include 'brand.php';
     });

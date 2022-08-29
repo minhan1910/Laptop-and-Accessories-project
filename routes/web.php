@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\SettingAdminController;
+use App\Http\Controllers\SliderAdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminUserController;
 /*
@@ -15,7 +17,9 @@ use App\Http\Controllers\AdminUserController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+
 */
+
 
 
 // Route::get('/home', function () {
@@ -25,9 +29,12 @@ use App\Http\Controllers\AdminUserController;
 // Route::prefix('admin')
 //     ->name('admin.')
 //     ->group(function () {
+
 //         Route::get('/', [AdminController::class, 'loginAdmin']);
+
 //         Route::post('/', [AdminController::class, 'postLoginAdmin']);
 
+//         // Categories
 //         Route::prefix('categories')
 //             ->name('categories.')
 //             ->group(function () {
@@ -51,6 +58,7 @@ use App\Http\Controllers\AdminUserController;
 //                     ->name('delete');
 //             });
 
+//         // Menus
 //         Route::prefix('menus')
 //             ->name('menus.')
 //             ->group(function () {
@@ -74,6 +82,7 @@ use App\Http\Controllers\AdminUserController;
 //                     ->name('delete');
 //             });
 
+//         // Products
 //         Route::prefix('products')
 //             ->name('products.')
 //             ->group(function () {
@@ -97,34 +106,51 @@ use App\Http\Controllers\AdminUserController;
 //                     ->name('delete');
 //             });
 
-//         // Handle users
-//         Route::prefix('users')->name('users.')->group(function () {
-//             Route::get('/', [AdminUserController::class, 'index'])
-//                 ->name('index');
+//         // Sliders
+//         Route::prefix('sliders')
+//             ->name('sliders.')
+//             ->group(function () {
 
-//             Route::get('/create', [AdminUserController::class, 'create'])
-//                 ->name('create');
+//                 Route::get('/', [SliderAdminController::class, 'index'])
+//                     ->name('index');
 
-//             Route::post('/store', [AdminUserController::class, 'store'])
-//                 ->name('store');
+//                 Route::get('/create', [SliderAdminController::class, 'create'])
+//                     ->name('create');
 
-//             Route::get('/edit/{id}', [AdminUserController::class, 'edit'])
-//                 ->name('edit');
+//                 Route::post('/store', [SliderAdminController::class, 'store'])
+//                     ->name('store');
 
-//             Route::post('/update/{id}', [AdminUserController::class, 'update'])
-//                 ->name('update');
+//                 Route::get('/edit/{id}', [SliderAdminController::class, 'edit'])
+//                     ->name('edit');
 
-//             Route::get('/delete/{id}', [AdminUserController::class, 'delete'])
-//                 ->name('delete');
-//         });
-//         // End handle users
+//                 Route::post('/update/{id}', [SliderAdminController::class, 'update'])
+//                     ->name('update');
+
+//                 Route::get('/delete/{id}', [SliderAdminController::class, 'delete'])
+//                     ->name('delete');
+//             });
+
+//         // Settings
+//         Route::prefix('settings')
+//             ->name('settings.')
+//             ->group(function () {
+
+//                 Route::get('/', [SettingAdminController::class, 'index'])
+//                     ->name('index');
+
+//                 Route::get('/create', [SettingAdminController::class, 'create'])
+//                     ->name('create');
+
+//                 Route::post('/store', [SettingAdminController::class, 'store'])
+//                     ->name('store');
+
+//                 Route::get('/edit/{id}', [SettingAdminController::class, 'edit'])
+//                     ->name('edit');
+
+//                 Route::post('/update/{id}', [SettingAdminController::class, 'update'])
+//                     ->name('update');
+
+//                 Route::get('/delete/{id}', [SettingAdminController::class, 'delete'])
+//                     ->name('delete');
+//             });
 //     });
-
-
-
-
-
-// Auth::routes();
-
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
