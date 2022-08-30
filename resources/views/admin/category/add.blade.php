@@ -11,7 +11,13 @@
         <!-- Content Header (Page header) -->
         @include('partials.content-header', ['name' => 'Category', 'key' => 'Add'])
         <!-- /.content-header -->
-
+        @if (session('err'))
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger }}">{{ session('err') }}</div>
+                </div>
+            </div>
+        @endif
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
@@ -23,6 +29,9 @@
                                 <label for="email">Category name</label>
                                 <input type="text" class="form-control" placeholder="Enter category name..."
                                     name="name">
+                                @error('name')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -31,6 +40,9 @@
                                     <option value="0">Choose parent category</option>
                                     {!! $htmlOption !!}
                                 </select>
+                                {{-- @error('parent_id')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror --}}
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>

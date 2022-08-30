@@ -22,6 +22,9 @@
                             <div class="form-group">
                                 <label for="email">Tên menu</label>
                                 <input type="text" class="form-control" placeholder="Nhập tên menu..." name="name">
+                                @error('name')
+                                    <span style="color: red;">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="form-group">

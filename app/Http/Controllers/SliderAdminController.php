@@ -54,12 +54,16 @@ class SliderAdminController extends Controller
             ->create($dataInsert);
 
         return redirect()
-            ->route('admin.sliders.index');
+            ->route('admin.sliders.index')
+            ->with('msg', 'Add Slider successfully !');
     }
 
     public function edit($id)
     {
-        $slider = $this->slider->find($id);
+        $slider = $this
+            ->slider
+            ->find($id);
+
         return view('admin.slider.edit', compact('slider'));
     }
 
@@ -72,7 +76,6 @@ class SliderAdminController extends Controller
                     Rule::unique('sliders')->ignore($id, 'id'),
                 ],
                 'description' => 'required',
-                'image_path' => 'required'
             ]
         );
 
