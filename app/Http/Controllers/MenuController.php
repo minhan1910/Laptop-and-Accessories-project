@@ -34,6 +34,11 @@ class MenuController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:menus',
+            'parent_id' => 'required'
+        ]);
+
         $this->menu->create([
             'name' => $request->name,
             'parent_id' => $request->parent_id,

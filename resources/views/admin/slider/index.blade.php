@@ -11,9 +11,14 @@
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        @include('partials.content-header', ['name' => 'Slider', 'key' => 'Add'])
+        @include('partials.content-header', ['name' => 'Slider', 'key' => 'List'])
         <!-- /.content-header -->
 
+        @if (Session::has('msg'))
+            <div class="alert alert-success">
+                {{ session('msg') }}
+            </div>
+        @endif
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">

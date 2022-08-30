@@ -10,6 +10,7 @@
         @include('partials.content-header', ['name' => 'Category', 'key' => 'List'])
         <!-- /.content-header -->
 
+
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">

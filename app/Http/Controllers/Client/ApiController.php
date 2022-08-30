@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+
 class ApiController extends Controller
 {
     //
@@ -15,10 +16,9 @@ class ApiController extends Controller
     }
     public function ajaxSearch()
     {
-        if(request('key'))
-        {
+        if (request('key')) {
             $key = request('key');
-            return $this->product::where('name','like','%'.$key.'%')->get();
+            return $this->product::where('name', 'like', '%' . $key . '%')->get();
         }
     }
 }

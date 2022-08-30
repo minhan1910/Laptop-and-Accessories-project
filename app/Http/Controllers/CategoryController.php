@@ -27,19 +27,10 @@ class CategoryController extends Controller
         return view('admin.category.index', compact('categories'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        // foreach ($data as $category) {
-        //     if ($category['parent_id'] === 0) {
-        //         echo '<opion>' . $category['name'] . '</opion>';
-        //         foreach ($data as $subCategory) {
-        //             if ($subCategory['parent_id'] === $category['id']) {
-        //                 echo '<opion>' . $subCategory['name'] . '</opion>';
-        //             }
-        //         }
-        //     }
-        // }
-        // return view('category.add');
+
+
         $htmlOption = $this->getCategory(Self::defaultParentId);
 
         return view('admin.category.add', compact('htmlOption'));
@@ -47,11 +38,19 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $this->category->create([
-            'name' => $request->name,
-            'parent_id' => $request->parent_id,
-            'slug' => Str::slug($request->name, '-'),
-        ]);
+        $request
+            ->validate([
+                'name' => 'required|unique:categories',
+                'parent_id' => 'required'
+            ]);
+
+        $this
+            ->category
+            ->create([
+                'name' => $request->name,
+                'parent_id' => $request->parent_id,
+                'slug' => Str::slug($request->name, '-'),
+            ]);
 
         return redirect()->route('admin.categories.index');
     }

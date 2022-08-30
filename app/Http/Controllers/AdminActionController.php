@@ -151,6 +151,7 @@ class AdminActionController extends Controller
 
             if (Session::has('actionId'))
                 $actionId = Session::get('actionId');
+
             $action = $this
                 ->action::find($actionId);
 

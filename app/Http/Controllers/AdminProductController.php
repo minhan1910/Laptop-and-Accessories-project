@@ -37,6 +37,7 @@ class AdminProductController extends Controller
 
     public function index(Request $request)
     {
+        DB::enableQueryLog();
         $data['q'] = $request->query('q');
         $data['category_id'] = $request->query('category_id');
         $data['brand_id'] = $request->query('brand_id');
@@ -65,9 +66,7 @@ class AdminProductController extends Controller
             'between' => 'between',
         ];
 
-        $query = Product::select(
-            'products.*',
-        )
+        $query = Product::select('products.*')
             ->join('brands', 'brands.id', '=', 'products.brand_id')
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->where(function (Builder $query) use ($data) {
@@ -76,28 +75,28 @@ class AdminProductController extends Controller
                 $query->orWhere('categories.name', 'like', "%{$data['q']}%");
             });
 
-        if ($data['category_id']) {
-            $category = Category::find($data['category_id']);
-            // if (!in_array($category->parent_id, $category_parent_ids))
-            $query->where('categories.id', '=', $data['category_id']);
-        }
+        if ($data['category_id'])
+            $query->where('categories.id', '=', (int)$data['category_id']);
         if ($data['brand_id'])
-            $query->where('brands.id', '=', $data['brand_id']);
+            $query->where('brands.id', '=', (int)$data['brand_id']);
         if ($data['start'])
             $query->where('products.created_at', '>=', $data['start']);
         if ($data['end'])
             $query->where('products.created_at', '<=', $data['end']);
+        if ($data['operator']) {
+            if ($data['operator'] === 'between') {
 
-        if ($data['operator'])
-            if ($data['operator'] === 'between')
-                $query->whereBetween('products.price', [$data['price_start'], $data['price_end']]);
-            else
-                $query->where('p;roducts.price', $data['operator'], $data['price_start']);
+                $query->whereBetween('products.price', [(int)$data['price_start'], (int)$data['price_end']]);
+            } else {
+
+                $query->where('products.price', $data['operator'], (int)$data['price_start']);
+            }
+        }
 
         $data['productList'] = $query
             ->paginate(8)
             ->withQueryString();
-
+        // dd(DB::getQueryLog());
         return view('admin.product.index', $data);
     }
     public function create()
